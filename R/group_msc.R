@@ -1,6 +1,3 @@
-require(pls)
-require(dplyr)
-
 dfmsc <- function(x) {
   as.data.frame(msc(as.matrix(x[,sapply(x, is.numeric)])))
 }
