@@ -117,8 +117,10 @@ setMethod("aggregate_spectra", "SpectraDataFrame",
         feat <- merge(subset(features(obj), select=c(id)), Filter(is.numeric, features(obj)), by="row.names", suffixes = "")
         rownames(feat) <- feat[,1]
         feat <- feat[,-1]
+        feat$dummy <- 1
         d <- ddply(feat, id, colwise(fun), .drop=TRUE, ...)
         d <- na.omit(d[colSums(!is.na(d)) > 0])
+        d <- subset(d, select=-c(dummy))
         
         # recompose the object
         res <- SpectraDataFrame(wl = wl(obj), nir = s, units = wl_units(obj), data = d)
